@@ -11,6 +11,7 @@ function DictQuickLookupRemake:onDictButtonsReady(dict_popup, buttons)
     return false
   end
 
+  local vocabularyButton = nil
   local prevDictButton = nil
   local nextDictButton = nil
   local highlightButton = nil
@@ -23,7 +24,9 @@ function DictQuickLookupRemake:onDictButtonsReady(dict_popup, buttons)
     for column = 1, #buttons[row] do
       local button = buttons[row][column]
 
-      if button.id == "prev_dict" then
+      if button.id == "vocabulary" then
+        vocabularyButton = button
+      elseif button.id == "prev_dict" then
         prevDictButton = button
       elseif button.id == "next_dict" then
         nextDictButton = button
@@ -72,7 +75,22 @@ function DictQuickLookupRemake:onDictButtonsReady(dict_popup, buttons)
     end
   }
 
-  buttons[1] = {
+  -- Remove all rows.
+  for row = 1, #buttons do
+    buttons[row] = nil
+  end
+
+  -- Add custom rows.
+  local currentRow = 1
+
+  if vocabularyButton ~= nil then
+    buttons[currentRow] = {
+      vocabularyButton,
+    }
+    currentRow = currentRow + 1
+  end
+
+  buttons[currentRow] = {
     highlightButton,
     wikipediaButton,
     wordReferenceButton,
@@ -80,7 +98,7 @@ function DictQuickLookupRemake:onDictButtonsReady(dict_popup, buttons)
     translateButton,
     searchButton,
   }
-  buttons[2] = nil
+  currentRow = currentRow + 1
 
   return false
 end
