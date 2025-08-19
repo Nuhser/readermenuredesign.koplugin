@@ -63,10 +63,20 @@ function DictQuickLookupRemake:onDictButtonsReady(dict_popup, buttons)
     end
   }
 
+  local dictionaryButton = {
+    id = "dictionary",
+    icon = "button.dictionary",
+    enabled = dict_popup.is_wiki,
+    callback = function()
+      self.ui.dictionary:onLookupWord(dict_popup.word, false, dict_popup.word_boxes)
+    end
+  }
+
   buttons[1] = {
     highlightButton,
     wikipediaButton,
     wordReferenceButton,
+    dictionaryButton,
     translateButton,
     searchButton,
   }
