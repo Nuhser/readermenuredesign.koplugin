@@ -19,6 +19,7 @@ function DictQuickLookupRemake:onDictButtonsReady(dict_popup, buttons)
   local wikipediaButton = nil
   local closeButton = nil
   local wordReferenceButton = nil
+  local unknownButtons = {}
 
   for row = 1, #buttons do
     for column = 1, #buttons[row] do
@@ -54,6 +55,8 @@ function DictQuickLookupRemake:onDictButtonsReady(dict_popup, buttons)
         button.text = nil
         button.icon = "button.wordreference"
         wordReferenceButton = button
+      else
+        table.insert(unknownButtons, button)
       end
     end
   end
@@ -99,6 +102,11 @@ function DictQuickLookupRemake:onDictButtonsReady(dict_popup, buttons)
     searchButton,
   }
   currentRow = currentRow + 1
+
+  if #unknownButtons > 0 then
+    buttons[currentRow] = unknownButtons
+    currentRow = currentRow + 1
+  end
 
   return false
 end
