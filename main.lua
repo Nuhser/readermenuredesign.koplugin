@@ -111,4 +111,23 @@ function DictQuickLookupRemake:onDictButtonsReady(dict_popup, buttons)
   return false
 end
 
+function DictQuickLookupRemake:onWordReferenceDefinitionButtonsReady(ui, buttons)
+	for row = 1, #buttons do
+		for column = 1, #buttons[row] do
+			local button = buttons[row][column]
+
+			if button.id == "wikipedia" then
+				button.text = nil
+				button.icon = "button.wikipedia"
+			elseif button.id == "dictionary" then
+				button.text = nil
+				button.icon = "button.dictionary"
+			elseif button.id == "translate" then
+				button.text = nil
+				button.icon = "button.translate"
+			end
+		end
+	end
+end
+
 return DictQuickLookupRemake
