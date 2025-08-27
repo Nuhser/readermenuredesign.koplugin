@@ -1,3 +1,4 @@
+local Dispatcher = require("dispatcher")
 local WidgetContainer = require("ui/widget/container/widgetcontainer")
 local Translator = require("ui/translator")
 local ReaderHighlight = require("apps/reader/modules/readerhighlight")
@@ -74,15 +75,18 @@ function ReaderHighlight:onShowHighlightMenu(index)
 		searchButton,
 	}
 
-	-- Split unknownButtons into smaller rows.
-	local maxRowLength = 2
-	if #unknownButtons > 0 then
-		for i = 1, #unknownButtons, maxRowLength do
-			local row = {}
-			for j = i, math.min(i + maxRowLength - 1, #unknownButtons) do
-				row[#row + 1] = unknownButtons[j]
+	local DictQuickLookupRemake = self.ui["dictquicklookupremake"]
+	if DictQuickLookupRemake:getShowUnknownButtons() then
+		-- Split unknownButtons into smaller rows.
+		local maxRowLength = 2
+		if #unknownButtons > 0 then
+			for i = 1, #unknownButtons, maxRowLength do
+				local row = {}
+				for j = i, math.min(i + maxRowLength - 1, #unknownButtons) do
+					row[#row + 1] = unknownButtons[j]
+				end
+				highlight_buttons[#highlight_buttons + 1] = row
 			end
-			highlight_buttons[#highlight_buttons + 1] = row
 		end
 	end
 
@@ -107,6 +111,41 @@ end
 local DictQuickLookupRemake = WidgetContainer:extend {
   name = "dictquicklookupremake",
 }
+
+function DictQuickLookupRemake:init()
+	self.ui.menu:registerToMainMenu(self)
+end
+
+function DictQuickLookupRemake:onDispatcherRegisterActions()
+	Dispatcher:registerAction("dictquicklookupremake_action", {category="none", event="Close", title=_("Dict Quick Lookup Remake"), general=true,})
+end
+
+function DictQuickLookupRemake:getShowUnknownButtons()
+	return G_reader_settings:readSetting("dictquicklookupremake_show_unknown_buttons", true)
+end
+
+function DictQuickLookupRemake:saveShowUnknownButtons(should_show)
+	G_reader_settings:saveSetting("dictquicklookupremake_show_unknown_buttons", should_show)
+end
+
+function DictQuickLookupRemake:addToMainMenu(menu_items)
+	menu_items.dictquicklookupremake = {
+		text = "Dict Quick Lookup Remake",
+		sorting_hint = "more_tools",
+		sub_item_table = {
+			{
+				text = "Show Unknown Buttons In Reader Highlight Menu",
+				checked_func = function()
+					return DictQuickLookupRemake:getShowUnknownButtons()
+				end,
+				callback = function(button)
+					local newValue = self:getShowUnknownButtons() == false
+					self:saveShowUnknownButtons(newValue)
+				end,
+			},
+		},
+	}
+end
 
 function DictQuickLookupRemake:onDictButtonsReady(dict_popup, buttons)
   if dict_popup.is_wiki_fullpage then
