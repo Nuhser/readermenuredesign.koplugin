@@ -64,7 +64,7 @@ function ReaderHighlight:onShowHighlightMenu(index)
 
 	local highlight_buttons = {{}}
 
-	-- Add custom rows.
+	-- Add primary buttons in desired order.
 	highlight_buttons[1] = {
 		selectButton,
 		highlightButton,
@@ -74,6 +74,14 @@ function ReaderHighlight:onShowHighlightMenu(index)
 		translateButton,
 		searchButton,
 	}
+
+	-- Remove `nil` buttons.
+	for i = #highlight_buttons[1], 1, -1 do
+		if highlight_buttons[1][i] == nil then
+			table.remove(highlight_buttons[1], i)
+		end
+	end
+
 
 	local ReaderMenuRedesign = self.ui["readermenuredesign"]
 	if ReaderMenuRedesign:getShowUnknownButtons() then
@@ -242,6 +250,14 @@ function ReaderMenuRedesign:onDictButtonsReady(dict_popup, buttons)
 	translateButton,
 	searchButton,
   }
+
+  -- Remove `nil` buttons.
+  for i = #buttons[currentRow], 1, -1 do
+	  if buttons[currentRow][i] == nil then
+		  table.remove(buttons[currentRow], i)
+	  end
+  end
+
   currentRow = currentRow + 1
 
   if #unknownButtons > 0 then
