@@ -1,5 +1,5 @@
-# zzz-dictquicklookupremake.koplugin
-A redesign of the Dictionary Quick Lookup popup and Reader Highlight menu.
+# zzz-readermenuredesign.koplugin
+A redesign of the various reader menus in KOReader, including the Dictionary Quick Lookup popup and Reader Highlight menu.
 
 <p align="left">
   <img src="https://github.com/user-attachments/assets/2d82282a-96c9-43b7-aaea-fb27a74d2f52" width=45%>
@@ -12,7 +12,7 @@ Includes an option to show 'unknown' buttons in the Reader Highlight menu:
 </p>
 
 
-Also modifies the [WordReference plugin](https://github.com/kristianpennacchia/wordreference.koplugin) definition popup:
+This plugin also modifies the UI for the [WordReference plugin](https://github.com/kristianpennacchia/wordreference.koplugin) definition popup:
 
 <p align="left">
   <img src="https://github.com/user-attachments/assets/f3daf3fe-acd9-4e33-8878-87a00b7e64df" width=45%>
@@ -20,12 +20,12 @@ Also modifies the [WordReference plugin](https://github.com/kristianpennacchia/w
 
 ## Install
 
-- Copy the `zzz-dictquicklookupremake.koplugin` folder to your KOReader `plugins` directory on the device.
+- Copy the `zzz-readermenuredesign.koplugin` folder to your KOReader `plugins` directory on the device.
 - Copy the icons into the equivalent folder in KOReader. E.g. `/koreader/resources/icons/mdlight`
 - Restart KOReader.
 
 ## Settings
 
 - Reader Highlight menu:
-  - Open Menu → Tools 🛠️ → More tools → Dict Quick Lookup Remake → Show Unknown Buttons In Reader Highlight Menu.
+  - Open Menu → Tools 🛠️ → More tools → Reader Menu Redesign → Show Unknown Buttons In Reader Highlight Menu.
   - This will toggle showing/hiding the 'unknown' buttons (buttons without special handling in this plugin) in the Reader Highlight menu.
