@@ -20,6 +20,8 @@ This plugin also modifies the UI for the [WordReference plugin](https://github.c
 
 ## Install
 
+- Download the [latest release](https://github.com/kristianpennacchia/zzz-readermenuredesign.koplugin/releases/latest).
+- Unzip `zzz-readermenuredesign.koplugin.zip`.
 - Copy the `zzz-readermenuredesign.koplugin` folder to your KOReader `plugins` directory on the device.
 - Copy the icons into the equivalent folder in KOReader. E.g. `/koreader/resources/icons/mdlight`
 - Restart KOReader.
