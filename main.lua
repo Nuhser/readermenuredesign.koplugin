@@ -118,7 +118,8 @@ end
 
 -- Create the instance for the ReaderMenuRedesign plugin.
 local ReaderMenuRedesign = WidgetContainer:extend {
-  name = "readermenuredesign",
+	name = "readermenuredesign",
+	is_doc_only = false,
 }
 
 function ReaderMenuRedesign:init()
