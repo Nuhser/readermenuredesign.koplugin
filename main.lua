@@ -21,37 +21,38 @@ function ReaderHighlight:onShowHighlightMenu(index)
 	for key, fn_button in ffiUtil.orderedPairs(self._highlight_buttons) do
 		local button = fn_button(self, index)
 		if not button.show_in_highlight_dialog_func or button.show_in_highlight_dialog_func() then
-			if key:find("_select") then
+			local key_without_index = key:sub(4)
+			if key_without_index == "select" then
 				button.text = nil
 				button.text_func = nil
 				button.icon = index and "button.select-extend" or "button.select"
 				selectButton = button
-			elseif key:find("_highlight") then
+			elseif key_without_index == "highlight" then
 				button.text = nil
 				button.text_func = nil
 				button.icon = "button.highlight"
 				highlightButton = button
-			elseif key:find("_wikipedia") then
+			elseif key_without_index == "wikipedia" then
 				button.text = nil
 				button.text_func = nil
 				button.icon = "button.wikipedia"
 				wikipediaButton = button
-			elseif key:find("_dictionary") then
+			elseif key_without_index == "dictionary" then
 				button.text = nil
 				button.text_func = nil
 				button.icon = "button.dictionary"
 				dictionaryButton = button
-			elseif key:find("_translate") then
+			elseif key_without_index == "translate" then
 				button.text = nil
 				button.text_func = nil
 				button.icon = "button.translate"
 				translateButton = button
-			elseif key:find("_wordreference") then
+			elseif key_without_index == "wordreference" then
 				button.text = nil
 				button.text_func = nil
 				button.icon = "button.wordreference"
 				wordReferenceButton = button
-			elseif key:find("_search") then
+			elseif key_without_index == "search" then
 				button.text = nil
 				button.text_func = nil
 				button.icon = "button.search"
