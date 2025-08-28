@@ -122,6 +122,7 @@ local ReaderMenuRedesign = WidgetContainer:extend {
 }
 
 function ReaderMenuRedesign:init()
+	self:onDispatcherRegisterActions()
 	self.ui.menu:registerToMainMenu(self)
 end
 
