@@ -84,7 +84,7 @@ function ReaderHighlight:onShowHighlightMenu(index)
 	end
 
 
-	local ReaderMenuRedesign = self.ui["readermenuredesign"]
+	local ReaderMenuRedesign = self.ui["zzz-readermenuredesign"]
 	if ReaderMenuRedesign:getShowUnknownButtons() then
 		-- Split unknownButtons into smaller rows.
 		local maxRowLength = 2
@@ -118,7 +118,7 @@ end
 
 -- Create the instance for the ReaderMenuRedesign plugin.
 local ReaderMenuRedesign = WidgetContainer:extend {
-	name = "readermenuredesign",
+	name = "zzz-readermenuredesign",
 	is_doc_only = false,
 }
 
