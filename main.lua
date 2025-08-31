@@ -139,6 +139,14 @@ function ReaderMenuRedesign:saveShowUnknownButtons(should_show)
 	G_reader_settings:saveSetting("readermenuredesign_show_unknown_buttons", should_show)
 end
 
+function ReaderMenuRedesign:getShowDictionaryNavButtons()
+	return G_reader_settings:readSetting("readermenuredesign_show_dictionary_nav_buttons", false)
+end
+
+function ReaderMenuRedesign:saveShowDictionaryNavButtons(should_show)
+	G_reader_settings:saveSetting("readermenuredesign_show_dictionary_nav_buttons", should_show)
+end
+
 function ReaderMenuRedesign:addToMainMenu(menu_items)
 	menu_items.readermenuredesign = {
 		text = "Reader Menu Redesign",
@@ -147,11 +155,21 @@ function ReaderMenuRedesign:addToMainMenu(menu_items)
 			{
 				text = "Show Unknown Buttons In Reader Highlight Menu",
 				checked_func = function()
-					return ReaderMenuRedesign:getShowUnknownButtons()
+					return self:getShowUnknownButtons()
 				end,
 				callback = function(button)
 					local newValue = self:getShowUnknownButtons() == false
 					self:saveShowUnknownButtons(newValue)
+				end,
+			},
+			{
+				text = "Show Nav Buttons In Dict Quick Lookup",
+				checked_func = function()
+					return self:getShowDictionaryNavButtons()
+				end,
+				callback = function(button)
+					local newValue = self:getShowDictionaryNavButtons() == false
+					self:saveShowDictionaryNavButtons(newValue)
 				end,
 			},
 		},
@@ -159,116 +177,132 @@ function ReaderMenuRedesign:addToMainMenu(menu_items)
 end
 
 function ReaderMenuRedesign:onDictButtonsReady(dict_popup, buttons)
-  if dict_popup.is_wiki_fullpage then
-	return false
-  end
+	if dict_popup.is_wiki_fullpage then
+		return false
+	end
 
-  local vocabularyButton = nil
-  local prevDictButton = nil
-  local nextDictButton = nil
-  local highlightButton = nil
-  local searchButton = nil
-  local wikipediaButton = nil
-  local closeButton = nil
-  local wordReferenceButton = nil
-  local unknownButtons = {}
+	local vocabularyButton = nil
+	local prevDictButton = nil
+	local nextDictButton = nil
+	local highlightButton = nil
+	local searchButton = nil
+	local wikipediaButton = nil
+	local closeButton = nil
+	local wordReferenceButton = nil
+	local unknownButtons = {}
 
-  for row = 1, #buttons do
-	for column = 1, #buttons[row] do
-	  local button = buttons[row][column]
+	for row = 1, #buttons do
+		for column = 1, #buttons[row] do
+			local button = buttons[row][column]
 
-	  if button.id == "vocabulary" then
-		vocabularyButton = button
-	  elseif button.id == "prev_dict" then
-		prevDictButton = button
-	  elseif button.id == "next_dict" then
-		nextDictButton = button
-	  elseif button.id == "highlight" then
-		button.text = nil
-		button.icon = "button.highlight"
-		highlightButton = button
-	  elseif button.id == "search" then
-		button.text = nil
-		button.icon = "button.search"
-		searchButton = button
-	  elseif button.id == "wikipedia" then
-		button.text_func = nil
-		if dict_popup.is_wiki then
-			button.icon = "button.article"
-		else
-			button.icon = "button.wikipedia"
+			if button.id == "vocabulary" then
+				vocabularyButton = button
+			elseif button.id == "prev_dict" then
+				if self:getShowDictionaryNavButtons() then
+					prevDictButton = button
+				end
+			elseif button.id == "next_dict" then
+				if self:getShowDictionaryNavButtons() then
+					nextDictButton = button
+				end
+			elseif button.id == "highlight" then
+				button.text = nil
+				button.icon = "button.highlight"
+				highlightButton = button
+			elseif button.id == "search" then
+				button.text = nil
+				button.icon = "button.search"
+				searchButton = button
+			elseif button.id == "wikipedia" then
+				button.text_func = nil
+				if dict_popup.is_wiki then
+					button.icon = "button.article"
+				else
+					button.icon = "button.wikipedia"
+				end
+				wikipediaButton = button
+			elseif button.id == "close" then
+				button.text = nil
+				button.icon = "close"
+				closeButton = button
+			elseif button.id == "wordreference" then
+				button.text = nil
+				button.icon = "button.wordreference"
+				wordReferenceButton = button
+			else
+				table.insert(unknownButtons, button)
+			end
 		end
-		wikipediaButton = button
-	  elseif button.id == "close" then
-		button.text = nil
-		button.icon = "close"
-		closeButton = button
-	  elseif button.id == "wordreference" then
-		button.text = nil
-		button.icon = "button.wordreference"
-		wordReferenceButton = button
-	  else
-		table.insert(unknownButtons, button)
-	  end
 	end
-  end
 
-  local translateButton = {
-	id = "translate",
-	icon = "button.translate",
-	callback = function()
-	  Translator:showTranslation(dict_popup.word, true)
+	local translateButton = {
+		id = "translate",
+		icon = "button.translate",
+		callback = function()
+		Translator:showTranslation(dict_popup.word, true)
+		end
+	}
+
+	local dictionaryButton = {
+		id = "dictionary",
+		icon = "button.dictionary",
+		enabled = dict_popup.is_wiki,
+		callback = function()
+		self.ui.dictionary:onLookupWord(dict_popup.word, false, dict_popup.word_boxes)
+		end
+	}
+
+	-- Remove all rows.
+	for row = 1, #buttons do
+		table.remove(buttons, row)
 	end
-  }
 
-  local dictionaryButton = {
-	id = "dictionary",
-	icon = "button.dictionary",
-	enabled = dict_popup.is_wiki,
-	callback = function()
-	  self.ui.dictionary:onLookupWord(dict_popup.word, false, dict_popup.word_boxes)
-	end
-  }
+	-- Add custom rows.
+	local currentRow = 1
 
-  -- Remove all rows.
-  for row = 1, #buttons do
-	buttons[row] = nil
-  end
-
-  -- Add custom rows.
-  local currentRow = 1
-
-  if vocabularyButton ~= nil then
 	buttons[currentRow] = {
-	  vocabularyButton,
+		vocabularyButton,
 	}
 	currentRow = currentRow + 1
-  end
 
-  buttons[currentRow] = {
-	highlightButton,
-	wikipediaButton,
-	wordReferenceButton,
-	dictionaryButton,
-	translateButton,
-	searchButton,
-  }
-
-  -- Remove `nil` buttons.
-  for i = #buttons[currentRow], 1, -1 do
-	  if buttons[currentRow][i] == nil then
-		  table.remove(buttons[currentRow], i)
-	  end
-  end
-
-  currentRow = currentRow + 1
-
-  if #unknownButtons > 0 then
-	buttons[currentRow] = unknownButtons
+	buttons[currentRow] = {
+		prevDictButton,
+		nextDictButton,
+	}
 	currentRow = currentRow + 1
-  end
 
-  return false
+	buttons[currentRow] = {
+		highlightButton,
+		wikipediaButton,
+		wordReferenceButton,
+		dictionaryButton,
+		translateButton,
+		searchButton,
+	}
+	currentRow = currentRow + 1
+
+	if #unknownButtons > 0 then
+		buttons[currentRow] = unknownButtons
+		currentRow = currentRow + 1
+	end
+
+	-- Remove all `nil` buttons.
+	for row = 1, #buttons do
+		for column = #buttons[row], 1, -1 do
+			if buttons[row][column] == nil then
+				table.remove(buttons[row], column)
+			end
+		end
+	end
+
+	-- Remove all empty rows.
+	for row = #buttons, 1, -1 do
+		if #buttons[row] == 0 then
+			table.remove(buttons, row)
+		end
+	end
+
+	return false
 end
 
 function ReaderMenuRedesign:onWordReferenceDefinitionButtonsReady(ui, buttons)
