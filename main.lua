@@ -63,7 +63,7 @@ function ReaderHighlight:onShowHighlightMenu(index)
 		end
 	end
 
-	local highlight_buttons = {{}}
+	local highlight_buttons = { {} }
 
 	-- Add primary buttons in desired order.
 	highlight_buttons[1] = {
@@ -99,7 +99,7 @@ function ReaderHighlight:onShowHighlightMenu(index)
 		end
 	end
 
-	self.highlight_dialog = ButtonDialog:new{
+	self.highlight_dialog = ButtonDialog:new {
 		buttons = highlight_buttons,
 		anchor = function()
 			return self:_getDialogAnchor(self.highlight_dialog, index)
@@ -128,7 +128,7 @@ function ReaderMenuRedesign:init()
 end
 
 function ReaderMenuRedesign:onDispatcherRegisterActions()
-	Dispatcher:registerAction("readermenuredesign_action", {category="none", event="Close", title=_("Reader Menu Redesign"), general=true,})
+	Dispatcher:registerAction("readermenuredesign_action", { category = "none", event = "Close", title = _("Reader Menu Redesign"), general = true, })
 end
 
 function ReaderMenuRedesign:getShowUnknownButtons()
@@ -239,7 +239,7 @@ function ReaderMenuRedesign:onDictButtonsReady(dict_popup, buttons)
 		id = "translate",
 		icon = "button.translate",
 		callback = function()
-		Translator:showTranslation(dict_popup.word, true)
+			Translator:showTranslation(dict_popup.word, true)
 		end
 	}
 
@@ -248,7 +248,7 @@ function ReaderMenuRedesign:onDictButtonsReady(dict_popup, buttons)
 		icon = "button.dictionary",
 		enabled = dict_popup.is_wiki,
 		callback = function()
-		self.ui.dictionary:onLookupWord(dict_popup.word, false, dict_popup.word_boxes)
+			self.ui.dictionary:onLookupWord(dict_popup.word, false, dict_popup.word_boxes)
 		end
 	}
 
