@@ -132,19 +132,21 @@ function ReaderMenuRedesign:onDispatcherRegisterActions()
 end
 
 function ReaderMenuRedesign:getShowUnknownButtons()
-	return G_reader_settings:readSetting("readermenuredesign_show_unknown_buttons", true)
+	return G_reader_settings:isTrue("readermenuredesign_show_unknown_buttons")
 end
 
-function ReaderMenuRedesign:saveShowUnknownButtons(should_show)
-	G_reader_settings:saveSetting("readermenuredesign_show_unknown_buttons", should_show)
+function ReaderMenuRedesign:toggleShowUnknownButtons()
+	local newValue = not self:getShowUnknownButtons()
+	G_reader_settings:saveSetting("readermenuredesign_show_unknown_buttons", newValue)
 end
 
 function ReaderMenuRedesign:getShowDictionaryNavButtons()
-	return G_reader_settings:readSetting("readermenuredesign_show_dictionary_nav_buttons", false)
+	return G_reader_settings:isTrue("readermenuredesign_show_dictionary_nav_buttons")
 end
 
-function ReaderMenuRedesign:saveShowDictionaryNavButtons(should_show)
-	G_reader_settings:saveSetting("readermenuredesign_show_dictionary_nav_buttons", should_show)
+function ReaderMenuRedesign:toggleShowDictionaryNavButtons()
+	local newValue = not self:getShowDictionaryNavButtons()
+	G_reader_settings:saveSetting("readermenuredesign_show_dictionary_nav_buttons", newValue)
 end
 
 function ReaderMenuRedesign:addToMainMenu(menu_items)
@@ -158,8 +160,7 @@ function ReaderMenuRedesign:addToMainMenu(menu_items)
 					return self:getShowUnknownButtons()
 				end,
 				callback = function(button)
-					local newValue = self:getShowUnknownButtons() == false
-					self:saveShowUnknownButtons(newValue)
+					self:toggleShowUnknownButtons()
 				end,
 			},
 			{
@@ -168,8 +169,7 @@ function ReaderMenuRedesign:addToMainMenu(menu_items)
 					return self:getShowDictionaryNavButtons()
 				end,
 				callback = function(button)
-					local newValue = self:getShowDictionaryNavButtons() == false
-					self:saveShowDictionaryNavButtons(newValue)
+					self:toggleShowDictionaryNavButtons()
 				end,
 			},
 		},
