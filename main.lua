@@ -132,7 +132,7 @@ function ReaderMenuRedesign:onDispatcherRegisterActions()
 end
 
 function ReaderMenuRedesign:getShowUnknownButtons()
-	return G_reader_settings:isTrue("readermenuredesign_show_unknown_buttons")
+	return G_reader_settings:nilOrTrue("readermenuredesign_show_unknown_buttons")
 end
 
 function ReaderMenuRedesign:toggleShowUnknownButtons()
