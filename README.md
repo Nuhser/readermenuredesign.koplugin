@@ -31,3 +31,7 @@ This plugin also modifies the UI for the [WordReference plugin](https://github.c
 - Reader Highlight menu:
   - Open Menu → Tools 🛠️ → More tools → Reader Menu Redesign → Show Unknown Buttons In Reader Highlight Menu.
   - This will toggle showing/hiding the 'unknown' buttons (buttons without special handling in this plugin) in the Reader Highlight menu.
+- Dict Quick Lookup:
+  - Open Menu → Tools 🛠️ → More tools → Reader Menu Redesign → Show Nav Buttons In Dict Quick Lookup.
+  - This will toggle showing/hiding the 'nav' buttons in the Dict Quick Lookup to navigate between dictionaries, wikipedia entires, etc.
+  - Alternatively: You can simply swipe left-to-right to navigate instead, but these buttons are more useful for PC/Mac.
