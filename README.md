@@ -26,6 +26,10 @@ This plugin also modifies the UI for the [WordReference plugin](https://github.c
 - Copy the icons into the equivalent folder in KOReader. E.g. `/koreader/resources/icons/mdlight`
 - Restart KOReader.
 
+#### Troubleshooting
+
+- If the icons don't appear and you instead see 'hazard' symbols, try putting the icons directly into `/koreader/resources/icons` instead of `mdlight`.
+
 ## Settings
 
 - Reader Highlight menu:
