@@ -18,6 +18,12 @@ This plugin also modifies the UI for the [WordReference plugin](https://github.c
   <img src="https://github.com/user-attachments/assets/f3daf3fe-acd9-4e33-8878-87a00b7e64df" width=45%>
 </p>
 
+This plugin also adds a button for opening the AI Assistant menu added by the [AI Assistant plugin](https://github.com/omer-faruq/assistant.koplugin):
+
+<p align="left">
+	<img width="45%" alt="screenshot_ai_assistant_button" src="https://github.com/user-attachments/assets/6c5650b4-6718-4b9b-8a0e-2cd8a6ed4f47" />
+</p>
+
 ## Install
 
 - Download the [latest release](https://github.com/kristianpennacchia/zzz-readermenuredesign.koplugin/releases/latest).
