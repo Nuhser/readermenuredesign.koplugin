@@ -5,7 +5,7 @@ A redesign of the various reader menus in KOReader, including the Dictionary Qui
   <img src="https://github.com/user-attachments/assets/2d82282a-96c9-43b7-aaea-fb27a74d2f52" width=45%>
 </p>
 
-Includes an option to show 'unknown' buttons in the Reader Highlight menu:
+Includes an option to show 'unknown' buttons (buttons not changed by this plugin) in the Reader Highlight menu:
 <p align="left">
   <img src="https://github.com/user-attachments/assets/162b8b8c-c6b5-4149-a8d9-b5e9bbeb64dd" width=45%>
   <img src="https://github.com/user-attachments/assets/9dbfec8c-88e0-4b91-9f13-7eb50f1f881c" width=45%>
