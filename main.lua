@@ -21,7 +21,9 @@ function ReaderHighlight:onShowHighlightMenu(index)
 	for key, fn_button in ffiUtil.orderedPairs(self._highlight_buttons) do
 		local button = fn_button(self, index)
 		if not button.show_in_highlight_dialog_func or button.show_in_highlight_dialog_func() then
-			local key_without_index = key:sub(4)
+            -- Remove leading index if present.
+			local key_without_index = string.match(key, "^%d+_(.*)$") or key
+
 			if key_without_index == "select" then
 				button.text = nil
 				button.text_func = nil
