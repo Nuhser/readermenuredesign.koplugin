@@ -66,7 +66,7 @@ function ReaderHighlight:onShowHighlightMenu(index)
 	local highlight_buttons = { {} }
 
 	-- Add primary buttons in desired order.
-	highlight_buttons[1] = {
+	local primaryButtons = {
 		selectButton,
 		highlightButton,
 		wikipediaButton,
@@ -76,13 +76,12 @@ function ReaderHighlight:onShowHighlightMenu(index)
 		searchButton,
 	}
 
-	-- Remove `nil` buttons.
-	for i = #highlight_buttons[1], 1, -1 do
-		if highlight_buttons[1][i] == nil then
-			table.remove(highlight_buttons[1], i)
+	-- Filter `nil` buttons.
+	for i = 1, #primaryButtons do
+		if primaryButtons[i] ~= nil then
+			table.insert(highlight_buttons[1], primaryButtons[i])
 		end
 	end
-
 
 	local ReaderMenuRedesign = self.ui["zzz-readermenuredesign"]
 	if ReaderMenuRedesign:getShowUnknownButtons() then
